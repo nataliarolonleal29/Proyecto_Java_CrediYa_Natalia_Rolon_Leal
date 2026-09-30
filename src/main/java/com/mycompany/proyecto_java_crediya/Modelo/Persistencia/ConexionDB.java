@@ -4,6 +4,11 @@
  */
 package com.mycompany.proyecto_java_crediya.Modelo.Persistencia;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  *
  * @author Natalia Rolon Leal
@@ -16,7 +21,7 @@ public class ConexionDB {
     public static Connection con = null;
 
     public static Connection MySQLConnection() throws SQLException{
-        url = "jdbc:mysql://localhost:3306/my_db";
+        url = "jdbc:mysql://localhost:3306/crediya_db";
         user = "root";
         password = "Natalita29";
         return getConnection(url, user, password);
@@ -25,12 +30,12 @@ public class ConexionDB {
     private static Connection getConnection(String url, String user,String password){
         try {
             con = DriverManager.getConnection(url, user, password);
-            if(con!=null){
+            if(con != null){
                 DatabaseMetaData meta = con.getMetaData();
                 System.out.println("Base de datos conectada "+ meta.getDriverName());
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Error de conexión: " + ex.getMessage());
         }
         return con;
     }

@@ -8,6 +8,33 @@ package com.mycompany.proyecto_java_crediya.Modelo.Clases;
  *
  * @author Natalia Rolon Leal
  */
-public class Supervisor {
+public class Supervisor extends Empleado{
+    
+    private double bono;
+
+    public Supervisor(double bono, int id, String rol, double salario, String nombre, String documento, String correo) {
+        super(id, rol, salario, nombre, documento, correo);
+        this.bono = bono;
+    }
+
+    public Supervisor(double bono, String rol, double salario, String nombre, String documento, String correo) {
+        super(rol, salario, nombre, documento, correo);
+        this.bono = bono;
+    }
+
+    public double getBono() {
+        return bono;
+    }
+
+    public void setBono(double bono) {
+        this.bono = bono;
+    }
+
+    @Override
+    public String toString() {
+        return "Supervisor{" + "bono=" + bono + '}';
+    }
+    
+    
     
 }
