@@ -13,13 +13,13 @@ public class Cliente extends Persona{
     private int id;
     private String telefono;
 
-    public Cliente(int id, String telefono, String nombre, String documento, String correo) {
+    public Cliente(int id, String nombre, String documento, String correo, String telefono) {
         super(nombre, documento, correo);
         this.id = id;
         this.telefono = telefono;
     }
 
-    public Cliente(String telefono, String nombre, String documento, String correo) {
+    public Cliente(String nombre, String documento, String correo, String telefono) {
         super(nombre, documento, correo);
         this.telefono = telefono;
     }

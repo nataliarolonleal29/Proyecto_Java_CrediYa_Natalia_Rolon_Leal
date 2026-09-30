@@ -13,12 +13,12 @@ public class Supervisor extends Empleado{
     private double bono;
 
     public Supervisor(double bono, int id, String rol, double salario, String nombre, String documento, String correo) {
-        super(id, rol, salario, nombre, documento, correo);
+        super(id, nombre, documento, correo, rol, salario);
         this.bono = bono;
     }
 
     public Supervisor(double bono, String rol, double salario, String nombre, String documento, String correo) {
-        super(rol, salario, nombre, documento, correo);
+        super(nombre, documento, correo, rol, salario);
         this.bono = bono;
     }
 

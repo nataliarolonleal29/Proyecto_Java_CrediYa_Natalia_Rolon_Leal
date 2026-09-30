@@ -38,3 +38,5 @@ CREATE TABLE pagos (
   monto DECIMAL(10,2),
   FOREIGN KEY (prestamo_id) REFERENCES prestamos(id)
 );
+
+SELECT * FROM empleados;
