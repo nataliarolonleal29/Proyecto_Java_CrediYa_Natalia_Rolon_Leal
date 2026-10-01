@@ -16,15 +16,15 @@ public class EmpleadoController {
     
     private EmpleadoDAO empleadoDAO;
 
-    public EmpleadoController(EmpleadoDAO empleadoDAO) {
-        this.empleadoDAO = empleadoDAO;
+    public EmpleadoController() {
+        empleadoDAO = new EmpleadoDAO();
     }
     
     public boolean registrarEmpleado(Empleado empleado){
         return empleadoDAO.guardarEmpleado(empleado);
     }
     
-    public List<Empleado> listarEmpleado(){
+    public List<Empleado> listarEmpleados(){
         return empleadoDAO.listarEmpleados();
     }
     

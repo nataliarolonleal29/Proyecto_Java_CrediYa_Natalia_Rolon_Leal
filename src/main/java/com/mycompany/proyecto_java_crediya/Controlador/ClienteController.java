@@ -5,9 +5,7 @@
 package com.mycompany.proyecto_java_crediya.Controlador;
 
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
-import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.EmpleadoDAO;
 import java.util.List;
 
 /**
@@ -18,8 +16,8 @@ public class ClienteController {
     
     private ClienteDAO clienteDAO;
 
-    public ClienteController(ClienteDAO clienteDAO) {
-        this.clienteDAO = clienteDAO;
+    public ClienteController() {
+        clienteDAO = new ClienteDAO();
     }
     
     public boolean registrarCliente(Cliente cliente){

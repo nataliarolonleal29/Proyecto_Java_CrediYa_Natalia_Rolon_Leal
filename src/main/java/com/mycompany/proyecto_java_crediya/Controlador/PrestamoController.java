@@ -4,9 +4,7 @@
  */
 package com.mycompany.proyecto_java_crediya.Controlador;
 
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
-import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.PrestamoDAO;
 import java.util.List;
 
@@ -18,8 +16,8 @@ public class PrestamoController {
     
     private PrestamoDAO prestamoDAO;
 
-    public PrestamoController(PrestamoDAO prestamoDAO) {
-        this.prestamoDAO = prestamoDAO;
+    public PrestamoController() {
+        prestamoDAO = new PrestamoDAO();
     }
     
     public boolean registrarPrestamo(Prestamo prestamo){

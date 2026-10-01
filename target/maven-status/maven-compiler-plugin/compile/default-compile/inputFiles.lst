@@ -1,3 +1,7 @@
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Controlador\ClienteController.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Controlador\EmpleadoController.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Controlador\PagoController.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Controlador\PrestamoController.java
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Modelo\Clases\Asesor.java
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Modelo\Clases\Cliente.java
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Modelo\Clases\Empleado.java
@@ -11,4 +15,8 @@ D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_C
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Modelo\Persistencia\EmpleadoDAO.java
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Modelo\Persistencia\PagoDAO.java
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Modelo\Persistencia\PrestamoDAO.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Vista\MenuClientes.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Vista\MenuEmpleados.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Vista\MenuPagos.java
+D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Vista\MenuPrestamos.java
 D:\Campus Lands Desarrollo de Software\Software\Z2\Java\Proyecto\Proyecto_Java_CrediYa\src\main\java\com\mycompany\proyecto_java_crediya\Vista\Proyecto_Java_CrediYa.java

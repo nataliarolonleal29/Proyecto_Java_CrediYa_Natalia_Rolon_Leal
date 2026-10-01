@@ -4,9 +4,7 @@
  */
 package com.mycompany.proyecto_java_crediya.Controlador;
 
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Pago;
-import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.PagoDAO;
 import java.util.List;
 
@@ -18,8 +16,8 @@ public class PagoController {
     
     private PagoDAO pagoDAO;
 
-    public PagoController(PagoDAO pagoDAO) {
-        this.pagoDAO = pagoDAO;
+    public PagoController() {
+        pagoDAO = new PagoDAO();
     }    
     
     public boolean registrarPago(Pago pago){
