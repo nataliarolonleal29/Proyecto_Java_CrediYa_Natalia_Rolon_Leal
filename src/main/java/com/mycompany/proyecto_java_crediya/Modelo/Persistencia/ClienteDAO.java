@@ -34,7 +34,7 @@ public class ClienteDAO {
             
             return true;
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error al guardar cliente: " + e.getMessage());
             return false;
         }    
@@ -52,28 +52,27 @@ public class ClienteDAO {
             
             while(rs.next()){
                 
-                Cliente clientes = new Cliente(
+                Cliente cliente = new Cliente(
                     rs.getInt("id"),
                     rs.getString("nombre"),
                     rs.getString("documento"),
-                    rs.getString("rol"),
                     rs.getString("correo"),
-                    rs.getDouble("salario"));
+                    rs.getString("telefono"));
                 
-                clientes.add(clientes);
+                clientes.add(cliente);
             }
             
         } catch (SQLException e) {
-            System.out.println("Error al listar los empleados: " + e.getMessage());
+            System.out.println("Error al listar los clientes: " + e.getMessage());
         }
         
-        return empleados;        
+        return clientes;        
     }
     
     
-    public Empleado buscarEmpleadoPorId(int id){
+    public Cliente buscarClientePorId(int id){
         
-        String sql = "SELECT id, nombre, documento, rol, correo, salario FROM empleados WHERE id = ?";
+        String sql = "SELECT id, nombre, documento, correo, telefono FROM clientes WHERE id = ?";
         
         try (Connection con = ConexionDB.MySQLConnection();
             PreparedStatement ps = con.prepareStatement(sql)){
@@ -84,18 +83,17 @@ public class ClienteDAO {
                 
                 if(rs.next()){
                     
-                    return new Empleado(
+                    return new Cliente(
                     rs.getInt("id"),
                     rs.getString("nombre"),
                     rs.getString("documento"),
-                    rs.getString("rol"),
                     rs.getString("correo"),
-                    rs.getDouble("salario"));
+                    rs.getString("telefono"));
                 }
 
             }
         } catch (SQLException e) {
-            System.out.println("Error al buscar el empleado por Id: " + e.getMessage());
+            System.out.println("Error al buscar el cliente por Id: " + e.getMessage());
         }
 
         return null;
@@ -103,35 +101,34 @@ public class ClienteDAO {
     }
     
     
-    public boolean actualizarEmpleado(Empleado empleado){
+    public boolean actualizarCliente(Cliente cliente){
         
-        String sql = "UPDATE empleados SET nombre = ?, documento = ?, rol = ?, correo = ?, salario = ? WHERE id = ?";
+        String sql = "UPDATE clientes SET nombre = ?, documento = ?, correo = ?, telefono = ? WHERE id = ?";
         
         try (Connection con = ConexionDB.MySQLConnection();
             PreparedStatement ps = con.prepareStatement(sql)){
 
-                ps.setString(1, empleado.getNombre());
-                ps.setString(2, empleado.getDocumento());
-                ps.setString(3, empleado.getRol());
-                ps.setString(4, empleado.getCorreo());
-                ps.setDouble(5, empleado.getSalario());
-                ps.setInt(6, empleado.getId());
+                ps.setString(1, cliente.getNombre());
+                ps.setString(2, cliente.getDocumento());
+                ps.setString(3, cliente.getCorreo());
+                ps.setString(4, cliente.getTelefono());
+                ps.setInt(5, cliente.getId());
                 
                 int filasAfectadas = ps.executeUpdate();
                 
                 return filasAfectadas > 0;
                 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar empleado: " + e.getMessage());
+            System.out.println("Error al actualizar cliente: " + e.getMessage());
             return false;
         }
         
     }
     
     
-    public boolean eliminarEmpleado(int id){
+    public boolean eliminarCliente(int id){
         
-        String sql = "DELETE FROM empleados WHERE id = ?";
+        String sql = "DELETE FROM clientes WHERE id = ?";
         
         try (Connection con = ConexionDB.MySQLConnection();
             PreparedStatement ps = con.prepareStatement(sql)){
@@ -144,7 +141,7 @@ public class ClienteDAO {
                 
                 
         } catch (SQLException e) {
-            System.out.println("Error al eliminar empleado: " + e.getMessage());
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
             return false;
         }        
     }

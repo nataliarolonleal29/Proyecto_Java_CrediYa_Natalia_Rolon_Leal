@@ -4,7 +4,9 @@
 
 package com.mycompany.proyecto_java_crediya.Vista;
 
+import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
+import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ConexionDB;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.EmpleadoDAO;
 import java.sql.Connection;
@@ -43,7 +45,7 @@ public class Proyecto_Java_CrediYa {
         
         // Prueba de que las clases quedan bien conectadas y se pueden actualizar en la base de datos
         
-        Empleado empleado = new Empleado("Aura María Fuentes", "1023456789", "qtalmija@gmail.com", "Asesor", 2500000);
+        /*Empleado empleado = new Empleado("Aura María Fuentes", "1023456789", "qtalmija@gmail.com", "Asesor", 2500000);
         
         EmpleadoDAO dao = new EmpleadoDAO();
         
@@ -53,7 +55,22 @@ public class Proyecto_Java_CrediYa {
             System.out.println("Empleado guardado correctamente");
         } else{
             System.out.println("No se pudo guardar el empleado");
+        }*/
+        
+        // Prueba de que las clases quedan bien conectadas y se pueden actualizar en la base de datos
+        
+        Cliente cliente = new Cliente("Patricia Fernández", "1095224689", "patsypatdesgraciado@gmail.com", "3164567892");
+        
+        ClienteDAO dao = new ClienteDAO();
+        
+        boolean resultado = dao.guardarCliente(cliente);
+        
+        if(resultado){
+            System.out.println("Cliente guardado correctamente");
+        } else{
+            System.out.println("No se pudo guardar el cliente");
         }
+        
         
         
         

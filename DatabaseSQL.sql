@@ -40,3 +40,4 @@ CREATE TABLE pagos (
 );
 
 SELECT * FROM empleados;
+SELECT * FROM clientes;
