@@ -66,10 +66,4 @@ public class Pago {
     public String toString() {
         return "Pago{" + "id=" + id + ", prestamo=" + prestamo + ", fecha_pago=" + fecha_pago + ", monto=" + monto + '}';
     }
-
-    
-    
-    
-    
-    
 }

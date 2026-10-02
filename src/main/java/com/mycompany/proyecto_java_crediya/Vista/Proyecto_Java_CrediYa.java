@@ -97,12 +97,15 @@ public class Proyecto_Java_CrediYa {
                     break;
                 case 2:
                     System.out.println("Menu de clientes seleccionado");
+                    MenuClientes.mostrarMenu();
                     break;
                 case 3:
                     System.out.println("Menu de prestamos seleccionado");
+                    MenuPrestamos.mostrarMenu();
                     break;
                 case 4:
                     System.out.println("Menu de pagos seleccionado");
+                    MenuPagos.mostrarMenu();
                     break;
                 case 5:
                     System.out.println("Gracias por utilizar CrediYa. Vuelve pronto.");

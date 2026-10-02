@@ -19,9 +19,10 @@ import java.util.List;
  *
  * @author Natalia Rolon Leal
  */
-public class PrestamoDAO {
+public class PrestamoDAO implements ICrudDAO<Prestamo>{
     
-    public boolean guardarPrestamo(Prestamo prestamo){
+    @Override
+    public boolean guardar(Prestamo prestamo){
         String sql = "INSERT INTO prestamos (cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection con = ConexionDB.MySQLConnection();
@@ -45,8 +46,8 @@ public class PrestamoDAO {
         }    
     }
     
-    
-    public List<Prestamo> listarPrestamo(){
+    @Override
+    public List<Prestamo> listar(){
         List<Prestamo> prestamos = new ArrayList<>();
         
         String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos";
@@ -95,7 +96,8 @@ public class PrestamoDAO {
     }
     
     
-    public Prestamo buscarPrestamoPorId(int id){
+    @Override
+    public Prestamo buscarPorId(int id){
         
         String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?";
         
@@ -146,7 +148,8 @@ public class PrestamoDAO {
     }
     
     
-    public boolean actualizarPrestamo(Prestamo prestamo){
+    @Override
+    public boolean actualizar(Prestamo prestamo){
         
         String sql = "UPDATE prestamos SET cliente_id = ?, empleado_id = ?, monto = ?, interes = ?, cuotas = ?, fecha_inicio = ?, estado = ? WHERE id = ?";
         
@@ -174,7 +177,8 @@ public class PrestamoDAO {
     }
     
     
-    public boolean eliminarPrestamo(int id){
+    @Override
+    public boolean eliminar(int id){
         
         String sql = "DELETE FROM prestamos WHERE id = ?";
         
@@ -193,9 +197,4 @@ public class PrestamoDAO {
             return false;
         }
     }
-    
-    
-    
-    
-    
 }

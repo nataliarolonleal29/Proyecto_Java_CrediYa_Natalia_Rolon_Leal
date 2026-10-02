@@ -20,9 +20,10 @@ import java.util.List;
  *
  * @author Natalia Rolon Leal
  */
-public class PagoDAO {
+public class PagoDAO implements ICrudDAO<Pago>{
     
-    public boolean guardarPago(Pago pago){
+    @Override
+    public boolean guardar(Pago pago){
         String sql = "INSERT INTO pagos (prestamo_id, fecha_pago, monto) VALUES (?, ?, ?)";
         
         try (Connection con = ConexionDB.MySQLConnection();
@@ -43,7 +44,8 @@ public class PagoDAO {
     }
     
     
-    public List<Pago> listarPago(){
+    @Override
+    public List<Pago> listar(){
         List<Pago> pagos = new ArrayList<>();
         
         String sql = "SELECT id, prestamo_id, fecha_pago, monto FROM pagos";
@@ -83,7 +85,8 @@ public class PagoDAO {
     }
     
     
-    public Pago buscarPagoPorId(int id){
+    @Override
+    public Pago buscarPorId(int id){
         
         String sql = "SELECT id, prestamo_id, fecha_pago, monto FROM pagos WHERE id = ?";
         
@@ -126,7 +129,8 @@ public class PagoDAO {
     }
     
     
-    public boolean actualizarPago(Pago pago){
+    @Override
+    public boolean actualizar(Pago pago){
         
         String sql = "UPDATE pagos SET prestamo_id = ?, fecha_pago = ?, monto = ? WHERE id = ?";
         
@@ -150,7 +154,8 @@ public class PagoDAO {
     }
     
     
-    public boolean eliminarPago(int id){
+    @Override
+    public boolean eliminar(int id){
         
         String sql = "DELETE FROM pagos WHERE id = ?";
         
@@ -169,8 +174,4 @@ public class PagoDAO {
             return false;
         }
     }
-    
-    
-    
-    
 }

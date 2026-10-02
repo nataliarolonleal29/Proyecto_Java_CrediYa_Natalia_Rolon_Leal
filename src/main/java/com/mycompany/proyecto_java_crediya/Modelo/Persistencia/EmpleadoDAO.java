@@ -16,9 +16,10 @@ import java.util.List;
  *
  * @author Natalia Rolon Leal
  */
-public class EmpleadoDAO {
+public class EmpleadoDAO implements ICrudDAO<Empleado>{
     
-    public boolean guardarEmpleado(Empleado empleado){
+    @Override
+    public boolean guardar(Empleado empleado){
         String sql = "INSERT INTO empleados (nombre, documento, rol, correo, salario) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection con = ConexionDB.MySQLConnection();
@@ -40,8 +41,8 @@ public class EmpleadoDAO {
         }    
     }
     
-    
-    public List<Empleado> listarEmpleados(){
+    @Override
+    public List<Empleado> listar(){
         List<Empleado> empleados = new ArrayList<>();
         
         String sql = "SELECT id, nombre, documento, rol, correo, salario FROM empleados";
@@ -71,7 +72,8 @@ public class EmpleadoDAO {
     }
     
     
-    public Empleado buscarEmpleadoPorId(int id){
+    @Override
+    public Empleado buscarPorId(int id){
         
         String sql = "SELECT id, nombre, documento, rol, correo, salario FROM empleados WHERE id = ?";
         
@@ -102,8 +104,8 @@ public class EmpleadoDAO {
         
     }
     
-    
-    public boolean actualizarEmpleado(Empleado empleado){
+    @Override
+    public boolean actualizar(Empleado empleado){
         
         String sql = "UPDATE empleados SET nombre = ?, documento = ?, rol = ?, correo = ?, salario = ? WHERE id = ?";
         
@@ -128,8 +130,8 @@ public class EmpleadoDAO {
         
     }
     
-    
-    public boolean eliminarEmpleado(int id){
+    @Override
+    public boolean eliminar(int id){
         
         String sql = "DELETE FROM empleados WHERE id = ?";
         

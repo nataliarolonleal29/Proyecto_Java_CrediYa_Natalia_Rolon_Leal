@@ -12,13 +12,8 @@ public class Supervisor extends Empleado{
     
     private double bono;
 
-    public Supervisor(double bono, int id, String rol, double salario, String nombre, String documento, String correo) {
+    public Supervisor(int id, String nombre, String documento, String correo, String rol, double salario, double bono) {
         super(id, nombre, documento, correo, rol, salario);
-        this.bono = bono;
-    }
-
-    public Supervisor(double bono, String rol, double salario, String nombre, String documento, String correo) {
-        super(nombre, documento, correo, rol, salario);
         this.bono = bono;
     }
 
@@ -34,7 +29,4 @@ public class Supervisor extends Empleado{
     public String toString() {
         return "Supervisor{" + "bono=" + bono + '}';
     }
-    
-    
-    
 }

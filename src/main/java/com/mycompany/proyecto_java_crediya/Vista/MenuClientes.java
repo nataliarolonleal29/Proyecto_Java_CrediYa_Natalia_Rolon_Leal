@@ -94,68 +94,66 @@ public class MenuClientes {
     
     public static void listarClientes(){
         
-            System.out.println("LISTA DE EMPLEADOS");
+            System.out.println("LISTA DE CLIENTES");
             
-            List<Empleado> empleados = empleadoController.listarEmpleados();
+            List<Cliente> clientes = clienteController.listarCliente();
             
-            if(empleados.isEmpty()){
-                System.out.println("No hay empleados registrados");
+            if(clientes.isEmpty()){
+                System.out.println("No hay clientes registrados");
                 return;
             }            
             
-            for (Empleado empleado : empleados) {
-                System.out.println("ID: " + empleado.getId());
-                System.out.println("Nombre: " + empleado.getNombre());
-                System.out.println("Documento: " + empleado.getDocumento());
-                System.out.println("Correo: " + empleado.getCorreo());
-                System.out.println("Rol: " + empleado.getRol());
-                System.out.println("Salario: " + empleado.getSalario());
+            for (Cliente cliente : clientes) {
+                System.out.println("ID: " + cliente.getId());
+                System.out.println("Nombre: " + cliente.getNombre());
+                System.out.println("Documento: " + cliente.getDocumento());
+                System.out.println("Correo: " + cliente.getCorreo());
+                System.out.println("Telefono: " + cliente.getTelefono());
             }
     }
     
     
-    public static void buscarEmpleado(){
+    public static void buscarCliente(){
         
-            System.out.println("BUSCAR EMPLEADO");
+            System.out.println("BUSCAR CLIENTE");
             
-            System.out.println("Ingrese el ID del empleado: ");
+            System.out.println("Ingrese el ID del cliente: ");
             int id = scanner.nextInt();
             scanner.nextLine();
             
-            Empleado empleado = empleadoController.buscarEmpleado(id);
+            Cliente cliente = clienteController.buscarCliente(id);
             
-            if(empleado == null){
-                System.out.println("No se encontro un empleado con ese ID");
+            if(cliente == null){
+                System.out.println("No se encontro un cliente con ese ID");
                 return;
             }
             
-            System.out.println("Empleado encontrado: ");
-            System.out.println("ID: " + empleado.getId());
-            System.out.println("Nombre: " + empleado.getNombre());
-            System.out.println("Documento: " + empleado.getDocumento());
-            System.out.println("Correo: " + empleado.getCorreo());
-            System.out.println("Rol: " + empleado.getRol());
-            System.out.println("Salario: " + empleado.getSalario());
+            System.out.println("Cliente encontrado: ");
+            System.out.println("ID: " + cliente.getId());
+            System.out.println("Nombre: " + cliente.getNombre());
+            System.out.println("Documento: " + cliente.getDocumento());
+            System.out.println("Correo: " + cliente.getCorreo());
+            System.out.println("Telefono: " + cliente.getTelefono());
             
     }
     
     
-    public static void actualizarEmpleado(){
+    public static void actualizarCliente(){
         
-            System.out.println("ACTUALIZAR EMPLEADO");
+            System.out.println("ACTUALIZAR CLIENTE");
             
-            System.out.println("Ingrese el ID del empleado: ");
+            System.out.println("Ingrese el ID del cliente: ");
             int id = scanner.nextInt();
             scanner.nextLine();
             
-            Empleado empleado = empleadoController.buscarEmpleado(id);
+            Cliente cliente = clienteController.buscarCliente(id);
             
-            if(empleado == null){
-                System.out.println("No se encontro un empleado con ese ID");
+            if(cliente == null){
+                System.out.println("No se encontro un cliente con ese ID");
                 return;
             }
             
-            System.out.println("Empleado encontrado: " + empleado.getNombre());
+            System.out.println("Cliente encontrado: " + cliente.getNombre());
             
             System.out.println("Nuevo nombre: ");
             String nombre = scanner.nextLine();
@@ -166,56 +164,51 @@ public class MenuClientes {
             System.out.println("Nuevo correo: ");
             String correo = scanner.nextLine();
             
-            System.out.println("Nuevo rol: ");
-            String rol = scanner.nextLine();
+            System.out.println("Nuevo telefono: ");
+            String telefono = scanner.nextLine();
             
-            System.out.println("Nuevo salario: ");
-            double salario = scanner.nextDouble();
-            scanner.nextLine();
+            cliente.setNombre(nombre);
+            cliente.setDocumento(documento);
+            cliente.setCorreo(correo);
+            cliente.setTelefono(telefono);
             
-            empleado.setNombre(nombre);
-            empleado.setDocumento(documento);
-            empleado.setCorreo(correo);
-            empleado.setRol(rol);
-            empleado.setSalario(salario);
-            
-            boolean resultado = empleadoController.actualizarEmpleado(empleado);
+            boolean resultado = clienteController.actualizarCliente(cliente);
             
             if(resultado){
-                System.out.println("Empleado actulizado correctamente");
+                System.out.println("Cliente actulizado correctamente");
             } else{
-                System.out.println("No se pudo actualizar el empleado");
+                System.out.println("No se pudo actualizar el cliente");
             }   
     }
     
     
-    public static void eliminarEmpleado(){
+    public static void eliminarCliente(){
         
-            System.out.println("ELIMINAR EMPLEADO");
+            System.out.println("ELIMINAR CLIENTE");
             
-            System.out.println("Ingrese el ID del empleado: ");
+            System.out.println("Ingrese el ID del cliente: ");
             int id = scanner.nextInt();
             scanner.nextLine();
             
-            Empleado empleado = empleadoController.buscarEmpleado(id);
+            Cliente cliente = clienteController.buscarCliente(id);
             
-            if(empleado == null){
-                System.out.println("No se encontro un empleado con ese ID");
+            if(cliente == null){
+                System.out.println("No se encontro un cliente con ese ID");
                 return;
             }
             
-            System.out.println("Empleado encontrado: " + empleado.getNombre());
+            System.out.println("Cliente encontrado: " + cliente.getNombre());
             
             System.out.println("¿Está seguro de eliminarlo? (Si/No): ");
             String confirmacion = scanner.nextLine();
             
             if(confirmacion.equalsIgnoreCase("Si")){
-                boolean resultado = empleadoController.eliminarEmpleado(id);
+                boolean resultado = clienteController.eliminarCliente(id);
             
                 if(resultado){
-                    System.out.println("Empleado eliminado correctamente");
+                    System.out.println("Cliente eliminado correctamente");
                 } else{
-                    System.out.println("No se pudo eliminar el empleado");
+                    System.out.println("No se pudo eliminar el cliente");
                 }
             } else{
                 System.out.println("Operacion cancelada");  

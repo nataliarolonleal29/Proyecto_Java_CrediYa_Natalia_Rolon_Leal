@@ -6,6 +6,8 @@ package com.mycompany.proyecto_java_crediya.Controlador;
 
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
+import com.mycompany.proyecto_java_crediya.Util.ArchivoUtil;
+import static com.mycompany.proyecto_java_crediya.Vista.MenuClientes.listarClientes;
 import java.util.List;
 
 /**
@@ -14,31 +16,32 @@ import java.util.List;
  */
 public class ClienteController {
     
-    private ClienteDAO clienteDAO;
+    private final ClienteDAO clienteDAO = new ClienteDAO();
 
-    public ClienteController() {
-        clienteDAO = new ClienteDAO();
-    }
-    
     public boolean registrarCliente(Cliente cliente){
-        return clienteDAO.guardarCliente(cliente);
+        return clienteDAO.guardar(cliente);
     }
     
     public List<Cliente> listarCliente(){
-        return clienteDAO.listarClientes();
+        return clienteDAO.listar();
     }
     
     public Cliente buscarCliente(int id){
-        return clienteDAO.buscarClientePorId(id);
+        return clienteDAO.buscarPorId(id);
     }
     
     public boolean actualizarCliente(Cliente cliente){
-        return clienteDAO.actualizarCliente(cliente);
+        return clienteDAO.actualizar(cliente);
     }
     
     public boolean eliminarCliente(int id){
-        return clienteDAO.eliminarCliente(id);
+        return clienteDAO.eliminar(id);
     }
+    
+    public boolean respaldarEnArchivo() {
+        return ArchivoUtil.guardarEnArchivo("clientes.txt", listarClientes());
+    }
+    
     
     
 }

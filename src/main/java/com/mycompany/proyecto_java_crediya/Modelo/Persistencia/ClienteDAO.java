@@ -5,7 +5,6 @@
 package com.mycompany.proyecto_java_crediya.Modelo.Persistencia;
 
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,9 +16,10 @@ import java.util.List;
  *
  * @author Natalia Rolon Leal
  */
-public class ClienteDAO {
+public class ClienteDAO implements ICrudDAO<Cliente>{
     
-    public boolean guardarCliente(Cliente cliente){
+    @Override
+    public boolean guardar(Cliente cliente){
         String sql = "INSERT INTO clientes (nombre, documento, correo, telefono) VALUES (?, ?, ?, ?)";
         
         try (Connection con = ConexionDB.MySQLConnection();
@@ -30,9 +30,8 @@ public class ClienteDAO {
             ps.setString(3, cliente.getCorreo());
             ps.setString(4, cliente.getTelefono());
             
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
             
-            return true;
             
         } catch (SQLException e) {
             System.out.println("Error al guardar cliente: " + e.getMessage());
@@ -40,8 +39,8 @@ public class ClienteDAO {
         }    
     }
     
-    
-    public List<Cliente> listarClientes(){
+    @Override
+    public List<Cliente> listar(){
         List<Cliente> clientes = new ArrayList<>();
         
         String sql = "SELECT id, nombre, documento, correo, telefono FROM clientes";
@@ -52,14 +51,12 @@ public class ClienteDAO {
             
             while(rs.next()){
                 
-                Cliente cliente = new Cliente(
+                clientes.add(new Cliente(
                     rs.getInt("id"),
                     rs.getString("nombre"),
                     rs.getString("documento"),
                     rs.getString("correo"),
-                    rs.getString("telefono"));
-                
-                clientes.add(cliente);
+                    rs.getString("telefono")));
             }
             
         } catch (SQLException e) {
@@ -69,8 +66,8 @@ public class ClienteDAO {
         return clientes;        
     }
     
-    
-    public Cliente buscarClientePorId(int id){
+    @Override
+    public Cliente buscarPorId(int id){
         
         String sql = "SELECT id, nombre, documento, correo, telefono FROM clientes WHERE id = ?";
         
@@ -93,15 +90,15 @@ public class ClienteDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("Error al buscar el cliente por Id: " + e.getMessage());
+            System.out.println("Error al buscar el cliente por ID: " + e.getMessage());
         }
 
         return null;
         
     }
     
-    
-    public boolean actualizarCliente(Cliente cliente){
+    @Override
+    public boolean actualizar(Cliente cliente){
         
         String sql = "UPDATE clientes SET nombre = ?, documento = ?, correo = ?, telefono = ? WHERE id = ?";
         
@@ -114,9 +111,7 @@ public class ClienteDAO {
                 ps.setString(4, cliente.getTelefono());
                 ps.setInt(5, cliente.getId());
                 
-                int filasAfectadas = ps.executeUpdate();
-                
-                return filasAfectadas > 0;
+                return ps.executeUpdate() > 0;
                 
         } catch (SQLException e) {
             System.out.println("Error al actualizar cliente: " + e.getMessage());
@@ -125,8 +120,8 @@ public class ClienteDAO {
         
     }
     
-    
-    public boolean eliminarCliente(int id){
+    @Override
+    public boolean eliminar(int id){
         
         String sql = "DELETE FROM clientes WHERE id = ?";
         
@@ -135,19 +130,11 @@ public class ClienteDAO {
                 
                 ps.setInt(1, id);
                 
-                int filasAfectadas = ps.executeUpdate();
-                
-                return filasAfectadas > 0;
-                
-                
+                return ps.executeUpdate() > 0;
+ 
         } catch (SQLException e) {
             System.out.println("Error al eliminar cliente: " + e.getMessage());
             return false;
         }        
     }
-    
-    
-    
-    
-    
 }

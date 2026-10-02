@@ -37,6 +37,21 @@ public class Prestamo {
         calcularValores();
     }
 
+    public Prestamo(Cliente cliente, Empleado empleado, double monto, double interes, int cuotas, LocalDate fecha_inicio, EstadoPrestamo estado) {
+        this.cliente = cliente;
+        this.empleado = empleado;
+        this.monto = monto;
+        this.interes = interes;
+        this.cuotas = cuotas;
+        this.fecha_inicio = fecha_inicio;
+        this.estado = estado;
+        this.montoTotal = montoTotal;
+        this.valorCuota = valorCuota;
+        this.saldoPendiente = saldoPendiente;
+    }
+    
+    
+
     public int getId() {
         return id;
     }
@@ -135,30 +150,32 @@ public class Prestamo {
     
     private void calcularValores(){
         
-        double valorInteres = monto * (interes / 100);
+        double valorInteres = monto * (interes / 100.0);
         
-        montoTotal = monto + valorInteres;
+        this.montoTotal = monto + valorInteres;
         
-        valorCuota = monto / cuotas;
+        this.valorCuota = cuotas > 0 ? (montoTotal / cuotas) : montoTotal;
         
-        saldoPendiente = montoTotal;
-        
+        if(this.saldoPendiente == 0 && this.estado == EstadoPrestamo.PENDIENTE){
+            this.saldoPendiente = this.montoTotal;
+        }
     }
 
     public void aplicarPago(double montoPago){
         
         if(montoPago <= 0){
-            throw new IllegalArgumentException("El pago debe ser mayor a cero.");
+            throw new IllegalArgumentException("El valor a pagar debe ser mayor a cero.");
         }
         
         if(montoPago > saldoPendiente){
-            throw new IllegalArgumentException("El pago no puede superar el saldo pendiente.");
+            throw new IllegalArgumentException("El pago ($" + montoPago + ") no puede ser superior al saldo pendiente ($" + saldoPendiente + ")");
         }
         
-        saldoPendiente -= montoPago;
+        this.saldoPendiente -= montoPago;
         
-        if(saldoPendiente == 0){
-            estado = EstadoPrestamo.PAGADO;
+        if(this.saldoPendiente == 0){
+            this.saldoPendiente = 0;
+            this.estado = EstadoPrestamo.PAGADO;
         }
         
     }

@@ -12,13 +12,8 @@ public class Asesor extends Empleado{
     
     private double comision;
 
-    public Asesor(double comision, int id, String rol, double salario, String nombre, String documento, String correo) {
+    public Asesor(int id, String nombre, String documento, String correo, String rol, double salario, double comision) {
         super(id, nombre, documento, correo, rol, salario);
-        this.comision = comision;
-    }
-
-    public Asesor(double comision, String rol, double salario, String nombre, String documento, String correo) {
-        super(nombre, documento, correo, rol, salario);
         this.comision = comision;
     }
 
@@ -29,10 +24,4 @@ public class Asesor extends Empleado{
     public void setComision(double comision) {
         this.comision = comision;
     }
-    
-    
-    
-    
-    
-    
 }

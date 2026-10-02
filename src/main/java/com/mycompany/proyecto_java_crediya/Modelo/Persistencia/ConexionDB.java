@@ -38,6 +38,5 @@ public class ConexionDB {
             System.out.println("Error de conexión: " + ex.getMessage());
         }
         return con;
-    }
-    
+    }    
 }

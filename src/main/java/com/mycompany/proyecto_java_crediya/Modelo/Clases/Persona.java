@@ -8,7 +8,7 @@ package com.mycompany.proyecto_java_crediya.Modelo.Clases;
  *
  * @author Natalia Rolon Leal
  */
-public class Persona {
+public abstract class Persona {
     
     private String nombre;
     private String documento;
