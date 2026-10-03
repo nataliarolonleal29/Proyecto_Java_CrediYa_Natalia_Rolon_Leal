@@ -6,6 +6,7 @@ package com.mycompany.proyecto_java_crediya.Vista;
 
 import com.mycompany.proyecto_java_crediya.Controlador.EmpleadoController;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
+import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,8 +16,7 @@ import java.util.Scanner;
  */
 public class MenuEmpleados {
     
-    private static Scanner scanner = new Scanner(System.in);
-    private static EmpleadoController empleadoController = new EmpleadoController();
+    private static final EmpleadoController controller = new EmpleadoController();
     
 
     public static void mostrarMenu(){
@@ -29,199 +29,133 @@ public class MenuEmpleados {
             System.out.println("3. Buscar empleado");
             System.out.println("4. Actualizar empleado");
             System.out.println("5. Eliminar empleado");
-            System.out.println("6. Volver al menu principal");
-            System.out.println("Seleccione una opcion: ");
+            System.out.println("6. Respaldar en archivo empleados.txt");
+            System.out.println("7. Volver al menu principal");
             
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+            opcion = ValidadorUtil.leerEntero("Seleccione una opcion: ");
             
             switch(opcion){
                 case 1:
-                    registrarEmpleado();
+                    registrar();
                     break;
                 case 2:
-                    listarEmpleados();
+                    listar();
                     break;
                 case 3:
-                    buscarEmpleado();
+                    buscar();
                     break;
                 case 4:
-                    actualizarEmpleado();
+                    actualizar();
                     break;
                 case 5:
-                    eliminarEmpleado();
+                    eliminar();
                     break;
                 case 6:
+                    respaldar();
+                    break;
+                case 7:
                     System.out.println("Regresando al menu principal...");
                     break;
                 default:
                     System.out.println("Opción no válida");
             }           
-        } while(opcion != 6);
+        } while(opcion != 7);
     }
     
     
-    public static void registrarEmpleado(){
+    private static void registrar(){
         
             System.out.println("REGISTRAR EMPLEADO");
             
-            System.out.println("Nombre: ");
-            String nombre = scanner.nextLine();
+            String nombre = ValidadorUtil.leerTexto("Nombre: ");
+            String documento = ValidadorUtil.leerTexto("Documento: ");
+            String correo = ValidadorUtil.leerTexto("Correo: ");
+            String rol = ValidadorUtil.leerTexto("Rol (Asesor/Supervisor): ");
+            double salario = ValidadorUtil.leerDouble("Salario: $");
             
-            System.out.println("Documento: ");
-            String documento = scanner.nextLine();
-            
-            System.out.println("Correo: ");
-            String correo = scanner.nextLine();
-            
-            System.out.println("Rol: ");
-            String rol = scanner.nextLine();
-            
-            System.out.println("Salario: ");
-            double salario = scanner.nextDouble();
-            scanner.nextLine();
-            
-            Empleado empleado = new Empleado(nombre, documento, correo, rol, salario);
-            
-            boolean resultado = empleadoController.registrarEmpleado(empleado);
-            
-            if(resultado){
-                System.out.println("Empleado registrado correctamente");
-            } else{
-                System.out.println("No se pudo registrar el empleado");
+            if(controller.registrarEmpleado(new Empleado(nombre, documento, correo, rol, salario))){
+                System.out.println("Empleado registrado con exito");
             }
         
     }
     
     
-    public static void listarEmpleados(){
+    private static void listar(){
         
             System.out.println("LISTA DE EMPLEADOS");
             
-            List<Empleado> empleados = empleadoController.listarEmpleados();
+            List<Empleado> empleados = controller.listarEmpleados();
             
             if(empleados.isEmpty()){
                 System.out.println("No hay empleados registrados");
-                return;
-            }            
-            
-            for (Empleado empleado : empleados) {
-                System.out.println("ID: " + empleado.getId());
-                System.out.println("Nombre: " + empleado.getNombre());
-                System.out.println("Documento: " + empleado.getDocumento());
-                System.out.println("Correo: " + empleado.getCorreo());
-                System.out.println("Rol: " + empleado.getRol());
-                System.out.println("Salario: " + empleado.getSalario());
+            } else{
+                empleados.forEach(System.out::println);
             }
     }
     
     
-    public static void buscarEmpleado(){
+    private static void buscar(){
         
             System.out.println("BUSCAR EMPLEADO");
+
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del empleado: ");
+
+            Empleado e = controller.buscarEmpleado(id);
             
-            System.out.println("Ingrese el ID del empleado: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Empleado empleado = empleadoController.buscarEmpleado(id);
-            
-            if(empleado == null){
-                System.out.println("No se encontro un empleado con ese ID");
-                return;
+            if(e != null){
+                System.out.println("Empleado encontrado: " + e);
+            } else{
+                System.out.println("Empleado no encontrado");
             }
-            
-            System.out.println("Empleado encontrado: ");
-            System.out.println("ID: " + empleado.getId());
-            System.out.println("Nombre: " + empleado.getNombre());
-            System.out.println("Documento: " + empleado.getDocumento());
-            System.out.println("Correo: " + empleado.getCorreo());
-            System.out.println("Rol: " + empleado.getRol());
-            System.out.println("Salario: " + empleado.getSalario());
-            
     }
     
     
-    public static void actualizarEmpleado(){
+    private static void actualizar(){
         
             System.out.println("ACTUALIZAR EMPLEADO");
             
-            System.out.println("Ingrese el ID del empleado: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del empleado: ");
             
-            Empleado empleado = empleadoController.buscarEmpleado(id);
+            Empleado e = controller.buscarEmpleado(id);
             
-            if(empleado == null){
-                System.out.println("No se encontro un empleado con ese ID");
+            if(e == null){
+                System.out.println("Empleado no encontrado");
                 return;
             }
             
-            System.out.println("Empleado encontrado: " + empleado.getNombre());
+            e.setNombre(ValidadorUtil.leerTexto("Nuevo nombre: "));
+            e.setDocumento(ValidadorUtil.leerTexto("Nuevo documento: "));
+            e.setCorreo(ValidadorUtil.leerTexto("Nuevo correo: "));
+            e.setRol(ValidadorUtil.leerTexto("Nuevo rol: "));
+            e.setSalario(ValidadorUtil.leerDouble("Nuevo salario: $"));
             
-            System.out.println("Nuevo nombre: ");
-            String nombre = scanner.nextLine();
-            
-            System.out.println("Nuevo documento: ");
-            String documento = scanner.nextLine();
-            
-            System.out.println("Nuevo correo: ");
-            String correo = scanner.nextLine();
-            
-            System.out.println("Nuevo rol: ");
-            String rol = scanner.nextLine();
-            
-            System.out.println("Nuevo salario: ");
-            double salario = scanner.nextDouble();
-            scanner.nextLine();
-            
-            empleado.setNombre(nombre);
-            empleado.setDocumento(documento);
-            empleado.setCorreo(correo);
-            empleado.setRol(rol);
-            empleado.setSalario(salario);
-            
-            boolean resultado = empleadoController.actualizarEmpleado(empleado);
-            
-            if(resultado){
-                System.out.println("Empleado actulizado correctamente");
-            } else{
-                System.out.println("No se pudo actualizar el empleado");
-            }   
+            if(controller.actualizarEmpleado(e)){
+                System.out.println("Empleado actualizado con exito");
+            }
     }
     
     
-    public static void eliminarEmpleado(){
+    private static void eliminar(){
         
             System.out.println("ELIMINAR EMPLEADO");
-            
-            System.out.println("Ingrese el ID del empleado: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Empleado empleado = empleadoController.buscarEmpleado(id);
-            
-            if(empleado == null){
-                System.out.println("No se encontro un empleado con ese ID");
-                return;
-            }
-            
-            System.out.println("Empleado encontrado: " + empleado.getNombre());
-            
-            System.out.println("¿Está seguro de eliminarlo? (Si/No): ");
-            String confirmacion = scanner.nextLine();
+
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del empleado: ");
+            String confirmacion = ValidadorUtil.leerTexto("¿Esta seguro? (Si/No)");
             
             if(confirmacion.equalsIgnoreCase("Si")){
-                boolean resultado = empleadoController.eliminarEmpleado(id);
-            
-                if(resultado){
-                    System.out.println("Empleado eliminado correctamente");
-                } else{
-                    System.out.println("No se pudo eliminar el empleado");
+                if(controller.eliminarEmpleado(id)){
+                    System.out.println("Empleado eliminado con exito");
                 }
             } else{
                 System.out.println("Operacion cancelada");  
             }
+    }
+    
+    
+    private static void respaldar(){
+        if(controller.respaldarEnArchivo()){
+            System.out.println("Empleados guardados en 'empleados.txt'");
+        }
     }
 }  
     

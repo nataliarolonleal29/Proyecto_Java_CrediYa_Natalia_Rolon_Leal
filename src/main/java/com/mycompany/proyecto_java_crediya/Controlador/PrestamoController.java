@@ -6,6 +6,7 @@ package com.mycompany.proyecto_java_crediya.Controlador;
 
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.PrestamoDAO;
+import com.mycompany.proyecto_java_crediya.Util.ArchivoUtil;
 import java.util.List;
 
 /**
@@ -14,30 +15,30 @@ import java.util.List;
  */
 public class PrestamoController {
     
-    private PrestamoDAO prestamoDAO;
+    private final PrestamoDAO prestamoDAO = new PrestamoDAO();
 
-    public PrestamoController() {
-        prestamoDAO = new PrestamoDAO();
-    }
-    
     public boolean registrarPrestamo(Prestamo prestamo){
-        return prestamoDAO.guardarPrestamo(prestamo);
+        return prestamoDAO.guardar(prestamo);
     }
     
-    public List<Prestamo> listarPrestamo(){
-        return prestamoDAO.listarPrestamo();
+    public List<Prestamo> listarPrestamos(){
+        return prestamoDAO.listar();
     }
     
     public Prestamo buscarPrestamo(int id){
-        return prestamoDAO.buscarPrestamoPorId(id);
+        return prestamoDAO.buscarPorId(id);
     }
     
     public boolean actualizarPrestamo(Prestamo prestamo){
-        return prestamoDAO.actualizarPrestamo(prestamo);
+        return prestamoDAO.actualizar(prestamo);
     }
     
     public boolean eliminarPrestamo(int id){
-        return prestamoDAO.eliminarPrestamo(id);
+        return prestamoDAO.eliminar(id);
+    }
+    
+    public boolean respaldarEnArchivo(){
+        return ArchivoUtil.guardarEnArchivo("prestamos.txt", listarPrestamos());
     }
     
 }

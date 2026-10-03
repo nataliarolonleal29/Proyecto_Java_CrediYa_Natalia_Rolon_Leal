@@ -6,6 +6,7 @@ package com.mycompany.proyecto_java_crediya.Controlador;
 
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Pago;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.PagoDAO;
+import com.mycompany.proyecto_java_crediya.Util.ArchivoUtil;
 import java.util.List;
 
 /**
@@ -14,30 +15,30 @@ import java.util.List;
  */
 public class PagoController {
     
-    private PagoDAO pagoDAO;
-
-    public PagoController() {
-        pagoDAO = new PagoDAO();
-    }    
+    private final PagoDAO pagoDAO = new PagoDAO();
     
     public boolean registrarPago(Pago pago){
-        return pagoDAO.guardarPago(pago);
+        return pagoDAO.guardar(pago);
     }
     
-    public List<Pago> listarPago(){
-        return pagoDAO.listarPago();
+    public List<Pago> listarPagos(){
+        return pagoDAO.listar();
     }
     
     public Pago buscarPago(int id){
-        return pagoDAO.buscarPagoPorId(id);
+        return pagoDAO.buscarPorId(id);
     }
     
     public boolean actualizarPago(Pago pago){
-        return pagoDAO.actualizarPago(pago);
+        return pagoDAO.actualizar(pago);
     }
     
     public boolean eliminarPago(int id){
-        return pagoDAO.eliminarPago(id);
+        return pagoDAO.eliminar(id);
+    }
+    
+    public boolean respaldarEnArchivo(){
+        return ArchivoUtil.guardarEnArchivo("pagos.txt", listarPagos());
     }
     
 }

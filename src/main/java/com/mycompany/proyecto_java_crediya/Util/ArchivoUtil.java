@@ -15,15 +15,20 @@ import java.util.List;
  */
 public class ArchivoUtil {
     
-    public static <T> boolean guardarEnArchivo(String nombreArchivo, List<T> lista) {
+    public static boolean guardarEnArchivo(String nombreArchivo, List<?> lista) {
+        if(lista == null || lista.isEmpty()){
+            System.out.println("La lista está vacia. No hay datos para guardar");
+            return false;
+        }
+        
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
-            for (T elemento : lista) {
+            for (Object elemento : lista) {
                 writer.write(elemento.toString());
                 writer.newLine();
             }
             return true;
         } catch (IOException e) {
-            System.out.println("Error al guardar archivo: " + e.getMessage());
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
             return false;
         }
     }

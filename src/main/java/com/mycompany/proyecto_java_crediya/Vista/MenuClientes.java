@@ -6,9 +6,8 @@ package com.mycompany.proyecto_java_crediya.Vista;
 
 import com.mycompany.proyecto_java_crediya.Controlador.ClienteController;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
+import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -16,8 +15,7 @@ import java.util.Scanner;
  */
 public class MenuClientes {
     
-    private static Scanner scanner = new Scanner(System.in);
-    private static ClienteController clienteController = new ClienteController();
+    private static final ClienteController controller = new ClienteController();
     
 
     public static void mostrarMenu(){
@@ -30,189 +28,127 @@ public class MenuClientes {
             System.out.println("3. Buscar cliente");
             System.out.println("4. Actualizar cliente");
             System.out.println("5. Eliminar cliente");
-            System.out.println("6. Volver al menu principal");
-            System.out.println("Seleccione una opcion: ");
+            System.out.println("6. Respaldar en archivo clientes.txt");
+            System.out.println("7. Volver al menu principal");
             
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+            opcion = ValidadorUtil.leerEntero("Seleccione una opcion: ");
             
             switch(opcion){
                 case 1:
-                    registrarCliente();
+                    registrar();
                     break;
                 case 2:
-                    listarClientes();
+                    listar();
                     break;
                 case 3:
-                    buscarCliente();
+                    buscar();
                     break;
                 case 4:
-                    actualizarCliente();
+                    actualizar();
                     break;
                 case 5:
-                    eliminarCliente();
+                    eliminar();
                     break;
                 case 6:
+                    respaldar();
+                    break;
+                case 7:
                     System.out.println("Regresando al menu principal...");
                     break;
                 default:
                     System.out.println("Opción no válida");
             }           
-        } while(opcion != 6);
+        } while(opcion != 7);
     }
     
     
-    public static void registrarCliente(){
+    private static void registrar(){
         
             System.out.println("REGISTRAR CLIENTE");
             
-            System.out.println("Nombre: ");
-            String nombre = scanner.nextLine();
+            String nombre = ValidadorUtil.leerTexto("Nombre: ");
+            String documento = ValidadorUtil.leerTexto("Documento: ");
+            String correo = ValidadorUtil.leerTexto("Correo: ");
+            String telefono = ValidadorUtil.leerTexto("Telefono: ");
             
-            System.out.println("Documento: ");
-            String documento = scanner.nextLine();
-            
-            System.out.println("Correo: ");
-            String correo = scanner.nextLine();
-            
-            System.out.println("Telefono: ");
-            String telefono = scanner.nextLine();
-            scanner.nextLine();
-            
-            Cliente cliente = new Cliente(nombre, documento, correo, telefono);
-            
-            boolean resultado = clienteController.registrarCliente(cliente);
-            
-            if(resultado){
-                System.out.println("Cliente registrado correctamente");
-            } else{
-                System.out.println("No se pudo registrar el cliente");
-            }
-        
+            if(controller.registrarCliente(new Cliente(nombre, documento, correo, telefono))){
+                System.out.println("Cliente registrado con exito");
+            }        
     }
     
     
-    public static void listarClientes(){
+    private static void listar(){
         
             System.out.println("LISTA DE CLIENTES");
             
-            List<Cliente> clientes = clienteController.listarCliente();
+            List<Cliente> clientes = controller.listarClientes();
             
             if(clientes.isEmpty()){
                 System.out.println("No hay clientes registrados");
-                return;
-            }            
-            
-            for (Cliente cliente : clientes) {
-                System.out.println("ID: " + cliente.getId());
-                System.out.println("Nombre: " + cliente.getNombre());
-                System.out.println("Documento: " + cliente.getDocumento());
-                System.out.println("Correo: " + cliente.getCorreo());
-                System.out.println("Telefono: " + cliente.getTelefono());
+            } else{
+                clientes.forEach(System.out::println);
             }
     }
     
     
-    public static void buscarCliente(){
+    private static void buscar(){
         
             System.out.println("BUSCAR CLIENTE");
             
-            System.out.println("Ingrese el ID del cliente: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del cliente: ");
+            Cliente cliente = controller.buscarCliente(id);
             
-            Cliente cliente = clienteController.buscarCliente(id);
-            
-            if(cliente == null){
+            if(cliente != null){
+                System.out.println("Cliente encontrado: " + cliente);
+            } else{
                 System.out.println("No se encontro un cliente con ese ID");
-                return;
-            }
-            
-            System.out.println("Cliente encontrado: ");
-            System.out.println("ID: " + cliente.getId());
-            System.out.println("Nombre: " + cliente.getNombre());
-            System.out.println("Documento: " + cliente.getDocumento());
-            System.out.println("Correo: " + cliente.getCorreo());
-            System.out.println("Telefono: " + cliente.getTelefono());
-            
+            }            
     }
     
     
-    public static void actualizarCliente(){
+    private static void actualizar(){
         
             System.out.println("ACTUALIZAR CLIENTE");
             
-            System.out.println("Ingrese el ID del cliente: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Cliente cliente = clienteController.buscarCliente(id);
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del cliente: ");
+            Cliente cliente = controller.buscarCliente(id);
             
             if(cliente == null){
-                System.out.println("No se encontro un cliente con ese ID");
+                System.out.println("No se encontro a ningun cliente con ese ID");
                 return;
             }
             
-            System.out.println("Cliente encontrado: " + cliente.getNombre());
+            cliente.setNombre(ValidadorUtil.leerTexto("Nuevo nombre: "));
+            cliente.setDocumento(ValidadorUtil.leerTexto("Nuevo documento: "));
+            cliente.setCorreo(ValidadorUtil.leerTexto("Nuevo correo: "));
+            cliente.setTelefono(ValidadorUtil.leerTexto("Nuevo telefono: "));
             
-            System.out.println("Nuevo nombre: ");
-            String nombre = scanner.nextLine();
-            
-            System.out.println("Nuevo documento: ");
-            String documento = scanner.nextLine();
-            
-            System.out.println("Nuevo correo: ");
-            String correo = scanner.nextLine();
-            
-            System.out.println("Nuevo telefono: ");
-            String telefono = scanner.nextLine();
-            
-            cliente.setNombre(nombre);
-            cliente.setDocumento(documento);
-            cliente.setCorreo(correo);
-            cliente.setTelefono(telefono);
-            
-            boolean resultado = clienteController.actualizarCliente(cliente);
-            
-            if(resultado){
-                System.out.println("Cliente actulizado correctamente");
-            } else{
-                System.out.println("No se pudo actualizar el cliente");
-            }   
+            if(controller.actualizarCliente(cliente)){
+                System.out.println("Cliente actualizado con exito");
+            }
     }
     
     
-    public static void eliminarCliente(){
+    private static void eliminar(){
         
             System.out.println("ELIMINAR CLIENTE");
             
-            System.out.println("Ingrese el ID del cliente: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Cliente cliente = clienteController.buscarCliente(id);
-            
-            if(cliente == null){
-                System.out.println("No se encontro un cliente con ese ID");
-                return;
-            }
-            
-            System.out.println("Cliente encontrado: " + cliente.getNombre());
-            
-            System.out.println("¿Está seguro de eliminarlo? (Si/No): ");
-            String confirmacion = scanner.nextLine();
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del cliente: ");
+            String confirmacion = ValidadorUtil.leerTexto("¿Esta seguro? (Si/No)");
             
             if(confirmacion.equalsIgnoreCase("Si")){
-                boolean resultado = clienteController.eliminarCliente(id);
-            
-                if(resultado){
+                if(controller.eliminarCliente(id)){
                     System.out.println("Cliente eliminado correctamente");
-                } else{
-                    System.out.println("No se pudo eliminar el cliente");
                 }
             } else{
                 System.out.println("Operacion cancelada");  
             }
+    }
+    
+    private static void respaldar(){
+        if(controller.respaldarEnArchivo()){
+            System.out.println("Datos de clientes exportados a 'clientes.txt'");
+        }
     }
     
     

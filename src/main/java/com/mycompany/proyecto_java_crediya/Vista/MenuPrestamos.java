@@ -11,6 +11,7 @@ import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.EstadoPrestamo;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
+import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -21,11 +22,9 @@ import java.util.Scanner;
  */
 public class MenuPrestamos {
     
-    private static Scanner scanner = new Scanner(System.in);
-    
-    private static PrestamoController prestamoController = new PrestamoController();
-    private static ClienteController clienteController = new ClienteController();
-    private static EmpleadoController empleadoController = new EmpleadoController();
+    private static final PrestamoController prestamoController = new PrestamoController();
+    private static final ClienteController clienteController = new ClienteController();
+    private static final EmpleadoController empleadoController = new EmpleadoController();
     
 
     public static void mostrarMenu(){
@@ -38,226 +37,155 @@ public class MenuPrestamos {
             System.out.println("3. Buscar prestamo");
             System.out.println("4. Actualizar prestamo");
             System.out.println("5. Eliminar prestamo");
-            System.out.println("6. Volver al menu principal");
-            System.out.println("Seleccione una opcion: ");
+            System.out.println("6. Respaldar en archivo prestamos.txt");
+            System.out.println("7. Volver al menu principal");
             
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+            opcion = ValidadorUtil.leerEntero("Seleccione una opcion: ");
             
             switch(opcion){
                 case 1:
-                    registrarPrestamo();
+                    registrar();
                     break;
                 case 2:
-                    listarPrestamos();
+                    listar();
                     break;
                 case 3:
-                    buscarPrestamo();
+                    buscar();
                     break;
                 case 4:
-                    actualizarPrestamo();
+                    actualizar();
                     break;
                 case 5:
-                    eliminarPrestamo();
+                    eliminar();
                     break;
                 case 6:
+                    respaldar();
+                    break;
+                case 7:
                     System.out.println("Regresando al menu principal...");
                     break;
                 default:
                     System.out.println("Opción no válida");
             }           
-        } while(opcion != 6);
+        } while(opcion != 7);
     }
     
     
-    public static void registrarPrestamo(){
+    private static void registrar(){
         
             System.out.println("REGISTRAR PRESTAMO");
             
-            System.out.println("ID del cliente: ");
-            int idCliente = scanner.nextInt();
-            scanner.nextLine();
+            int idCliente = ValidadorUtil.leerEntero("ID del cliente: ");
             
             Cliente cliente = clienteController.buscarCliente(idCliente);
             
             if(cliente == null){
-                System.out.println("No se encontró un cliente con ese ID");
+                System.out.println("Error: No existe un cliente con el ID " + idCliente);
                 return;
             }
             
-            System.out.println("ID del empleado: ");
-            int idEmpleado = scanner.nextInt();
-            scanner.nextLine();
+            int idEmpleado = ValidadorUtil.leerEntero("ID del empleado: ");
             
             Empleado empleado = empleadoController.buscarEmpleado(idEmpleado);
             
             if(empleado == null){
-                System.out.println("No se encontró un empleado con ese ID");
+                System.out.println("Error: No existe un empleado con el ID " + idEmpleado);
                 return;
             }
             
-            System.out.println("Monto del prestamo: ");
-            double monto = scanner.nextDouble();
+            double monto = ValidadorUtil.leerDouble("Monto del prestamo: $");
+            double interes = ValidadorUtil.leerDouble("Tasa de interes (%): ");
+            int cuotas = ValidadorUtil.leerEntero("Numero de cuotas: ");
+            LocalDate fechaInicio = ValidadorUtil.leerFecha("Fecha de inicio: ");
             
-            System.out.println("Interes (%): ");
-            double interes = scanner.nextDouble();
+            Prestamo p = new Prestamo(cliente, empleado, monto, interes, cuotas, fechaInicio, EstadoPrestamo.PENDIENTE);
             
-            System.out.println("Numero de cuotas: ");
-            int cuotas = scanner.nextInt();
-            scanner.nextLine();
-            
-            System.out.println("Fecha de inicio (AAAA-MM-DD): ");
-            String fechaTexto = scanner.nextLine();
-            
-            LocalDate fechaInicio = LocalDate.parse(fechaTexto);
-            
-            Prestamo prestamo = new Prestamo(cliente, empleado, monto, interes, cuotas, fechaInicio, EstadoPrestamo.PENDIENTE);
-            
-            boolean resultado = prestamoController.registrarPrestamo(prestamo);
-            
-            if(resultado){
+            if(prestamoController.registrarPrestamo(p)){
                 System.out.println("Prestamo registrado correctamente");
-                System.out.println("Monto total: " + prestamo.getMontoTotal());
-                System.out.println("Valor de cuota: " + prestamo.getValorCuota());
-                System.out.println("Saldo pendiente: " + prestamo.getSaldoPendiente());
+                System.out.println("Total a pagar (con interes): $" + p.getMontoTotal());
+                System.out.println("Valor de cuota: " + p.getValorCuota());
+                System.out.println("Saldo pendiente: " + p.getSaldoPendiente());
             } else{
                 System.out.println("No se pudo registrar el prestamo");
             }
         
     }
 
-    public static void listarPrestamos(){
+    private static void listar(){
         
             System.out.println("LISTA DE PRESTAMOS");
             
-            List<Prestamo> prestamos = prestamoController.listarPrestamo();
+            List<Prestamo> lista = prestamoController.listarPrestamos();
             
-            if(prestamos.isEmpty()){
+            if(lista.isEmpty()){
                 System.out.println("No hay prestamos registrados");
-                return;
-            }            
-            
-            for (Prestamo prestamo : prestamos) {
-                System.out.println("ID: " + prestamo.getId());
-                System.out.println("Cliente ID: " + prestamo.getCliente().getId());
-                System.out.println("Empleado ID: " + prestamo.getEmpleado().getId());
-                System.out.println("Monto: " + prestamo.getMonto());
-                System.out.println("Interes: " + prestamo.getInteres() + "%");
-                System.out.println("Cuotas: " + prestamo.getCuotas());
-                System.out.println("Fecha de inicio: " + prestamo.getFecha_inicio());
-                System.out.println("Estado: " + prestamo.getEstado());
-                System.out.println("Monto total: " + prestamo.getMontoTotal());
-                System.out.println("Valor cuota: " + prestamo.getValorCuota());
-                System.out.println("Saldo pendiente: " + prestamo.getSaldoPendiente());
+            } else{
+                lista.forEach(System.out::println);
             }
     }
     
     
-    public static void buscarPrestamo(){
+    private static void buscar(){
         
             System.out.println("BUSCAR PRESTAMO");
+
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del prestamo: ");
             
-            System.out.println("Ingrese el ID del prestamo: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
+            Prestamo p = prestamoController.buscarPrestamo(id);
             
-            Prestamo prestamo = prestamoController.buscarPrestamo(id);
-            
-            if(prestamo == null){
-                System.out.println("No se encontro un prestamo con ese ID");
-                return;
-            }
-            
-            System.out.println("Prestamo encontrado: ");
-            System.out.println("ID: " + prestamo.getId());
-            System.out.println("Cliente ID: " + prestamo.getCliente().getId());
-            System.out.println("Empleado ID: " + prestamo.getEmpleado().getId());
-            System.out.println("Monto: " + prestamo.getMonto());
-            System.out.println("Interes: " + prestamo.getInteres() + "%");
-            System.out.println("Cuotas: " + prestamo.getCuotas());
-            System.out.println("Fecha de inicio: " + prestamo.getFecha_inicio());
-            System.out.println("Estado: " + prestamo.getEstado());
-            System.out.println("Monto total: " + prestamo.getMontoTotal());
-            System.out.println("Valor cuota: " + prestamo.getValorCuota());
-            System.out.println("Saldo pendiente: " + prestamo.getSaldoPendiente());
-            
+            if(p != null){
+                System.out.println("Prestamo encontrado");
+            } else{
+                System.out.println("Prestamo no encontrado");
+            }            
     }
     
     
-    public static void actualizarPrestamo(){
+    private static void actualizar(){
         
             System.out.println("ACTUALIZAR PRESTAMO");
+
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del prestamo: ");
             
-            System.out.println("Ingrese el ID del prestamo: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
+            Prestamo p = prestamoController.buscarPrestamo(id);
             
-            Prestamo prestamo = prestamoController.buscarPrestamo(id);
-            
-            if(prestamo == null){
+            if(p == null){
                 System.out.println("No se encontro un prestamo con ese ID");
                 return;
             }
             
-            System.out.println("Nuevo monto: ");
-            double monto = scanner.nextDouble();
+            p.setMonto(ValidadorUtil.leerDouble("Nuevo monto: $"));
+            p.setInteres(ValidadorUtil.leerDouble("Nuevo interes (%): "));
+            p.setCuotas(ValidadorUtil.leerEntero("Nuevas cuotas: "));
+            p.setFecha_inicio(ValidadorUtil.leerFecha("Nueva fecha de inicio: "));
             
-            System.out.println("Nuevo interes (%): ");
-            double interes = scanner.nextDouble();
-            
-            System.out.println("Nuevas cuotas: ");
-            int cuotas = scanner.nextInt();
-            scanner.nextLine();
-            
-            System.out.println("Fecha de inicio (AAAA-MM-DD): ");
-            String fechaTexto = scanner.nextLine();
-            
-            LocalDate fechaInicio = LocalDate.parse(fechaTexto);
-            
-            prestamo.setMonto(monto);
-            prestamo.setInteres(interes);
-            prestamo.setCuotas(cuotas);
-            prestamo.setFecha_inicio(fechaInicio);
-            
-            boolean resultado = prestamoController.actualizarPrestamo(prestamo);
-            
-            if(resultado){
-                System.out.println("Prestamo actulizado correctamente");
-            } else{
-                System.out.println("No se pudo actualizar el prestamo");
-            }   
+            if(prestamoController.actualizarPrestamo(p)){
+                System.out.println("Prestamo actualizado con exito");
+            }
     }
     
     
-    public static void eliminarPrestamo(){
+    private static void eliminar(){
         
             System.out.println("ELIMINAR PRESTAMO");
+
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del prestamo: ");
             
-            System.out.println("Ingrese el ID del prestamo: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Prestamo prestamo = prestamoController.buscarPrestamo(id);
-            
-            if(prestamo == null){
-                System.out.println("No se encontro un prestamo con ese ID");
-                return;
-            }
-            
-            System.out.println("¿Está seguro de eliminarlo? (Si/No): ");
-            String confirmacion = scanner.nextLine();
+            String confirmacion = ValidadorUtil.leerTexto("¿Esta seguro? (Si/No)");
             
             if(confirmacion.equalsIgnoreCase("Si")){
-                boolean resultado = prestamoController.eliminarPrestamo(id);
-            
-                if(resultado){
+                if(prestamoController.eliminarPrestamo(id)){
                     System.out.println("Prestamo eliminado correctamente");
-                } else{
-                    System.out.println("No se pudo eliminar el prestamo");
                 }
             } else{
-                System.out.println("Operacion cancelada");
+                System.out.println("Operacion cancelada");  
             }
+    }
+    
+    private static void respaldar(){
+        if(prestamoController.respaldarEnArchivo()){
+            System.out.println("Prestamos guardados en 'prestamos.txt'");
+        }
     }
     
 }

@@ -13,6 +13,7 @@ import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.EstadoPrestamo;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Pago;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
+import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -23,10 +24,8 @@ import java.util.Scanner;
  */
 public class MenuPagos {
     
-    private static Scanner scanner = new Scanner(System.in);
-    
-    private static PagoController pagoController = new PagoController();
-    private static PrestamoController prestamoController = new PrestamoController();
+    private static final PagoController pagoController = new PagoController();
+    private static final PrestamoController prestamoController = new PrestamoController();
     
 
     public static void mostrarMenu(){
@@ -34,200 +33,113 @@ public class MenuPagos {
         
         do{
             System.out.println("GESTION DE PAGOS");
-            System.out.println("1. Registrar pago");
-            System.out.println("2. Listar pagos");
-            System.out.println("3. Buscar pago");
-            System.out.println("4. Actualizar pago");
-            System.out.println("5. Eliminar pago");
-            System.out.println("6. Volver al menu principal");
-            System.out.println("Seleccione una opcion: ");
-            
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+            System.out.println("1. Registrar pago / abono");
+            System.out.println("2. Listar historial de pagos");
+            System.out.println("3. Buscar pago por ID");
+            System.out.println("4. Respaldar en archivo pagos.txt");
+            System.out.println("5. Volver al menu principal");
+
+            opcion = ValidadorUtil.leerEntero("Seleccione una opcion: ");
             
             switch(opcion){
                 case 1:
-                    registrarPago();
+                    registrar();
                     break;
                 case 2:
-                    listarPagos();
+                    listar();
                     break;
                 case 3:
-                    buscarPago();
+                    buscar();
                     break;
                 case 4:
-                    actualizarPago();
+                    respaldar();
                     break;
                 case 5:
-                    eliminarPago();
-                    break;
-                case 6:
                     System.out.println("Regresando al menu principal...");
                     break;
                 default:
                     System.out.println("Opción no válida");
             }           
-        } while(opcion != 6);
+        } while(opcion != 7);
     }
     
     
-    public static void registrarPago(){
+    private static void registrar(){
         
             System.out.println("REGISTRAR PAGO");
             
-            System.out.println("ID del prestamo: ");
-            int idPrestamo = scanner.nextInt();
-            scanner.nextLine();
+            int idPrestamo = ValidadorUtil.leerEntero("Ingrese el ID del prestamo a abonar: ");
             
             Prestamo prestamo = prestamoController.buscarPrestamo(idPrestamo);
             
             if(prestamo == null){
-                System.out.println("No se encontró un prestamo con ese ID");
+                System.out.println("Prestamo no encontrado");
                 return;
             }
             
-            System.out.println("Prestamo encontrado");
-            System.out.println("Saldo pendiente: " + prestamo.getSaldoPendiente());
+            System.out.println("Informacion del prestamo: ");
+            System.out.println("Cliente: " + prestamo.getCliente().getId());
+            System.out.println("Monto total: " + prestamo.getMontoTotal());
+            System.out.println("Saldo pendiente actual: $" + prestamo.getSaldoPendiente());
             
-            System.out.println("Monto del pago: ");
-            double monto = scanner.nextDouble();
-            scanner.nextLine();
+            if(prestamo.getSaldoPendiente() <= 0){
+                System.out.println("Este prestamo ya se encuentra totalmente PAGADO");
+                return;
+            }
+            
+            double montoPago = ValidadorUtil.leerDouble("Monto del pago: $");
+            LocalDate fechaPago = ValidadorUtil.leerFecha("Fecha del pago");
             
             try {
                 
-                prestamo.aplicarPago(monto);
+                prestamo.aplicarPago(montoPago);                
+                Pago pago = new Pago(prestamo, fechaPago, montoPago);
             
-                System.out.println("Fecha del pago (AAAA-MM-DD): ");
-                String fechaTexto = scanner.nextLine();
-                
-                LocalDate fechaPago = LocalDate.parse(fechaTexto);
-                
-                Pago pago = new Pago(prestamo, fechaPago, monto);
-                
-                boolean resultado = pagoController.registrarPago(pago);
-            
-                if(resultado){
+                if(pagoController.registrarPago(pago)){
                     System.out.println("Pago registrado correctamente");
-                    System.out.println("Nuevo saldo pendiente: " + prestamo.getSaldoPendiente());
+                    System.out.println("Nuevo saldo pendiente: $" + prestamo.getSaldoPendiente());
                     System.out.println("Estado del prestamo: " + prestamo.getEstado());
-                } else{
-                    System.out.println("No se pudo registrar el pago");
                 }
 
             } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("Error en la transaccion: " + e.getMessage());
             }
     }
 
-    public static void listarPagos(){
+    private static void listar(){
         
-            System.out.println("LISTA DE PAGOS");
+            System.out.println("HISTORIAL DE PAGOS");
             
-            List<Pago> pagos = pagoController.listarPago();
+            List<Pago> pagos = pagoController.listarPagos();
             
             if(pagos.isEmpty()){
                 System.out.println("No hay pagos registrados");
-                return;
-            }            
-            
-            for (Pago pago : pagos) {
-                System.out.println("ID del pago: " + pago.getId());
-                System.out.println("ID del prestamo: " + pago.getPrestamo().getId());
-                System.out.println("Fecha del pago: " + pago.getFecha_pago());
-                System.out.println("Monto: " + pago.getMonto());
+            } else{
+                pagos.forEach(System.out::println);
             }
     }
     
     
-    public static void buscarPago(){
+    private static void buscar(){
         
             System.out.println("BUSCAR PAGO");
-            
-            System.out.println("Ingrese el ID del pago: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Pago pago = pagoController.buscarPago(id);
-            
-            if(pago == null){
-                System.out.println("No se encontro un pago con ese ID");
-                return;
-            }
-            
-            System.out.println("Pago encontrado: ");
-            System.out.println("ID del pago: " + pago.getId());
-            System.out.println("ID del prestamo: " + pago.getPrestamo().getId());
-            System.out.println("Fecha del pago: " + pago.getFecha_pago());
-            System.out.println("Monto: " + pago.getMonto());       
-    }
-    
-    
-    public static void actualizarPago(){
-        
-            System.out.println("ACTUALIZAR PAGO");
-            
-            System.out.println("Ingrese el ID del pago: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Pago pago = pagoController.buscarPago(id);
-            
-            if(pago == null){
-                System.out.println("No se encontro un pago con ese ID");
-                return;
-            }
-            
-            System.out.println("Nuevo monto: ");
-            double monto = scanner.nextDouble();
-            scanner.nextLine();
-            
-            System.out.println("Nueva fecha (AAAA-MM-DD): ");
-            String fechaTexto = scanner.nextLine();
 
-            LocalDate fechaPago = LocalDate.parse(fechaTexto);
+            int id = ValidadorUtil.leerEntero("Ingrese el ID del pago: ");
             
-            pago.setMonto(monto);
-            pago.setFecha_pago(fechaPago);
+            Pago p = pagoController.buscarPago(id);
             
-            boolean resultado = pagoController.actualizarPago(pago);
-            
-            if(resultado){
-                System.out.println("Pago actulizado correctamente");
+            if(p != null){
+                System.out.println("Pago encontrado: " + p);
             } else{
-                System.out.println("No se pudo actualizar el pago");
-            }   
-    }
+                System.out.println("Pago no encontrado");
+            }    
+    }   
     
     
-    public static void eliminarPago(){
-        
-            System.out.println("ELIMINAR PAGO");
-            
-            System.out.println("Ingrese el ID del pago: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
-            
-            Pago pago = pagoController.buscarPago(id);
-            
-            if(pago == null){
-                System.out.println("No se encontro un pago con ese ID");
-                return;
-            }
-            
-            System.out.println("¿Está seguro de eliminarlo? (Si/No): ");
-            String confirmacion = scanner.nextLine();
-            
-            if(confirmacion.equalsIgnoreCase("Si")){
-                boolean resultado = pagoController.eliminarPago(id);
-            
-                if(resultado){
-                    System.out.println("Pago eliminado correctamente");
-                } else{
-                    System.out.println("No se pudo eliminar el pago");
-                }
-            } else{
-                System.out.println("Operacion cancelada");
-            }
+    private static void respaldar(){
+        if(pagoController.respaldarEnArchivo()){
+            System.out.println("Pagos guardados en archivo 'pagos.txt'");
+        }
     }
     
     
