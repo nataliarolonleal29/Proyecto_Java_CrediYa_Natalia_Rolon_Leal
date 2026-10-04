@@ -7,7 +7,6 @@ package com.mycompany.proyecto_java_crediya.Controlador;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
 import com.mycompany.proyecto_java_crediya.Util.ArchivoUtil;
-import static com.mycompany.proyecto_java_crediya.Vista.MenuClientes.listar;
 import java.util.List;
 
 /**

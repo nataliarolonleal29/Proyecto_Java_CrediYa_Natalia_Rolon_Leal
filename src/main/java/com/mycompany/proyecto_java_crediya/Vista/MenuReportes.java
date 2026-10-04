@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto_java_crediya.Vista;
 
+import com.mycompany.proyecto_java_crediya.Controlador.ReporteController;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
 import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.util.List;
@@ -66,8 +67,46 @@ public class MenuReportes {
         }
     }
     
+    private static void verPrestamosPagados(){
+        System.out.println("PRESTAMOS PAGADOS");
+        List<Prestamo> pagados = reporteController.obtenerPrestamosPagados();
+        if(pagados.isEmpty()){
+            System.out.println("No hay prestamos pagados");
+        } else{
+            pagados.forEach(System.out::println);
+        }
+    }
     
+    private static void verClientesMorosos(){
+        System.out.println("CLIENTES CON SALDO PENDIENTE");
+        List<Prestamo> morosos = reporteController.obtenerClientesConSaldoPendiente();
+        if(morosos.isEmpty()){
+            System.out.println("¡Excelente! No hay clientes morosos");
+        } else{
+            morosos.forEach(p -> System.out.println("Cliente: " + p.getCliente().getNombre() + " | Telefono: " + p.getCliente().getTelefono() + " | Deuda pendiente: $" + p.getSaldoPendiente()));
+        }
+    }
     
+    private static void verTotales(){
+        System.out.println("INDICADORES FINANCIEROS GENERALES");
+        double totalPrestado = reporteController.calcularTotalDineroPrestado();
+        double totalRecaudado = reporteController.calcularTotalDineroRecaudado();
+        
+        System.out.println("Total dinero colocado en prestamos: $" + totalPrestado);
+        System.out.println("Total dinero recaudado mediante bonos: $" + totalRecaudado);
+        System.out.println("Capital por cobrar: $" + (totalPrestado - totalRecaudado));
+        
+    }
+    
+    private static void verPrestamosPorCliente(){
+        int idCliente = ValidadorUtil.leerEntero("Ingrese el ID del cliente a consultar: ");
+        List<Prestamo> lista = reporteController.obtenerPrestamoPorCliente(idCliente);
+        if(lista.isEmpty()){
+            System.out.println("No se encontraron prestamos asociados a ese cliente");
+        } else{
+            lista.forEach(System.out::println);
+        }
+    }
     
     
     

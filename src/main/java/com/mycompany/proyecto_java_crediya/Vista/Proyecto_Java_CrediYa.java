@@ -9,6 +9,7 @@ import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ClienteDAO;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.ConexionDB;
 import com.mycompany.proyecto_java_crediya.Modelo.Persistencia.EmpleadoDAO;
+import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -73,22 +74,20 @@ public class Proyecto_Java_CrediYa {
         }*/
         
         
-        // MENÚ PRINCIPAL
-        Scanner scanner = new Scanner(System.in);
-        
+        // MENÚ PRINCIPAL        
         int opcion;
         
         do{
-            System.out.println("CREDIYA");
+            System.out.println("SISTEMA DE CARTERA CREDIYA");
             System.out.println("Menu principal");
             System.out.println("1. Gestionar empleados");
             System.out.println("2. Gestionar clientes");
             System.out.println("3. Gestionar prestamos");
             System.out.println("4. Gestionar pagos");
-            System.out.println("5. Salir");
-            System.out.println("Seleccione una opcion: ");
+            System.out.println("5. Seccion de reportes");
+            System.out.println("6. Salir");
             
-            opcion = scanner.nextInt();
+            opcion = ValidadorUtil.leerEntero("Seleccione una opcion: ");
             
             switch(opcion){
                 case 1:
@@ -108,12 +107,15 @@ public class Proyecto_Java_CrediYa {
                     MenuPagos.mostrarMenu();
                     break;
                 case 5:
+                    System.out.println("Menu de reportes seleccionado");
+                    MenuReportes.mostrarMenu();
+                    break;
+                case 6:
                     System.out.println("Gracias por utilizar CrediYa. Vuelve pronto.");
                     break;
                 default:
                     System.out.println("Opcion no válida");
             }           
-        } while(opcion != 5);
-        scanner.close();
+        } while(opcion != 6);
     }
 }
