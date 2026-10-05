@@ -72,7 +72,8 @@ public class MenuPagos {
             }
             
             System.out.println("Informacion del prestamo: ");
-            System.out.println("Cliente: " + prestamo.getCliente().getId());
+            System.out.println("ID Cliente: " + prestamo.getCliente().getId());
+            System.out.println("Cliente: " + prestamo.getCliente().getNombre());
             System.out.println("Monto total: " + prestamo.getMontoTotal());
             System.out.println("Saldo pendiente actual: $" + prestamo.getSaldoPendiente());
             
