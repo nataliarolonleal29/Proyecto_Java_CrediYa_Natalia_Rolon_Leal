@@ -1,0 +1,2 @@
+Pago{id=1, prestamo=Prestamo{id=1, cliente=null, empleado=null, monto=0.0, interes=0.0, cuotas=0, fecha_inicio=null, estado=PENDIENTE, montoTotal=0.0, valorCuota=0.0, saldoPendiente=0.0}, fecha_pago=2026-05-11, monto=150000.0}
+Pago{id=2, prestamo=Prestamo{id=2, cliente=null, empleado=null, monto=0.0, interes=0.0, cuotas=0, fecha_inicio=null, estado=PENDIENTE, montoTotal=0.0, valorCuota=0.0, saldoPendiente=0.0}, fecha_pago=2026-12-16, monto=5250000.0}

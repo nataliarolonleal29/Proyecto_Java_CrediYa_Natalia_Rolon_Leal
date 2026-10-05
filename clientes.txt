@@ -1,0 +1,3 @@
+Cliente{id=1, telefono=3164567892}
+Cliente{id=3, telefono=302456789}
+Cliente{id=4, telefono=3126549876}

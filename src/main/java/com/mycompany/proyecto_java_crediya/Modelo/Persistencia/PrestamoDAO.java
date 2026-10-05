@@ -32,7 +32,7 @@ public class PrestamoDAO implements ICrudDAO<Prestamo>{
             ps.setInt(2, prestamo.getEmpleado().getId());
             ps.setDouble(3, prestamo.getMonto());
             ps.setDouble(4, prestamo.getInteres());
-            ps.setDouble(5, prestamo.getCuotas());
+            ps.setInt(5, prestamo.getCuotas());
             ps.setDate(6, java.sql.Date.valueOf(prestamo.getFecha_inicio()));
             ps.setString(7, prestamo.getEstado().name());
             

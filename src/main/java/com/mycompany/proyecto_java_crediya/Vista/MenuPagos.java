@@ -4,19 +4,13 @@
  */
 package com.mycompany.proyecto_java_crediya.Vista;
 
-import com.mycompany.proyecto_java_crediya.Controlador.ClienteController;
-import com.mycompany.proyecto_java_crediya.Controlador.EmpleadoController;
 import com.mycompany.proyecto_java_crediya.Controlador.PagoController;
 import com.mycompany.proyecto_java_crediya.Controlador.PrestamoController;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.EstadoPrestamo;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Pago;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
 import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *

@@ -1,0 +1,5 @@
+Empleado{id=1, rol=qtalmija@gmail.com, salario=3000000.0}
+Empleado{id=2, rol=nata@gmail.com, salario=7500000.0}
+Empleado{id=5, rol=patsypat@gmail.com, salario=2500000.0}
+Empleado{id=6, rol=aleee@gmail.com, salario=8000000.0}
+Empleado{id=7, rol=sarysar@gmail.com, salario=2000000.0}

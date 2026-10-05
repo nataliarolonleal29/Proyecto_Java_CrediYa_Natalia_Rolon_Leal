@@ -1,0 +1,4 @@
+Prestamo{id=1, cliente=Cliente{id=3, telefono=}, empleado=Empleado{id=1, rol=, salario=0.0}, monto=5000000.0, interes=5.0, cuotas=10, fecha_inicio=2026-09-29, estado=PENDIENTE, montoTotal=5250000.0, valorCuota=525000.0, saldoPendiente=5250000.0}
+Prestamo{id=2, cliente=Cliente{id=1, telefono=}, empleado=Empleado{id=2, rol=, salario=0.0}, monto=5000000.0, interes=5.0, cuotas=10, fecha_inicio=2026-09-29, estado=PENDIENTE, montoTotal=5250000.0, valorCuota=525000.0, saldoPendiente=5250000.0}
+Prestamo{id=3, cliente=Cliente{id=1, telefono=}, empleado=Empleado{id=2, rol=, salario=0.0}, monto=8000000.0, interes=6.0, cuotas=20, fecha_inicio=2025-07-26, estado=PENDIENTE, montoTotal=8480000.0, valorCuota=424000.0, saldoPendiente=8480000.0}
+Prestamo{id=4, cliente=Cliente{id=3, telefono=}, empleado=Empleado{id=1, rol=, salario=0.0}, monto=900000.0, interes=2.0, cuotas=10, fecha_inicio=2026-10-05, estado=PENDIENTE, montoTotal=918000.0, valorCuota=91800.0, saldoPendiente=918000.0}

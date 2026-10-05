@@ -4,9 +4,6 @@
  */
 package com.mycompany.proyecto_java_crediya.Modelo.Persistencia;
 
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Cliente;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.Empleado;
-import com.mycompany.proyecto_java_crediya.Modelo.Clases.EstadoPrestamo;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Pago;
 import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
 import java.sql.Connection;

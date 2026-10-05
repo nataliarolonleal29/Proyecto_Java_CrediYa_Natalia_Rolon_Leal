@@ -14,7 +14,6 @@ import com.mycompany.proyecto_java_crediya.Modelo.Clases.Prestamo;
 import com.mycompany.proyecto_java_crediya.Util.ValidadorUtil;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *

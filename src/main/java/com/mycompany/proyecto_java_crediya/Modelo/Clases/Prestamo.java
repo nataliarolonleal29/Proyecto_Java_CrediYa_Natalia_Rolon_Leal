@@ -48,6 +48,8 @@ public class Prestamo {
         this.montoTotal = montoTotal;
         this.valorCuota = valorCuota;
         this.saldoPendiente = saldoPendiente;
+        
+        calcularValores();
     }
     
     
@@ -148,7 +150,7 @@ public class Prestamo {
     
     
     
-    private void calcularValores(){
+    public double calcularValores(){
         
         double valorInteres = monto * (interes / 100.0);
         
@@ -159,9 +161,10 @@ public class Prestamo {
         if(this.saldoPendiente == 0 && this.estado == EstadoPrestamo.PENDIENTE){
             this.saldoPendiente = this.montoTotal;
         }
+        return this.montoTotal;
     }
 
-    public void aplicarPago(double montoPago){
+    public double aplicarPago(double montoPago){
         
         if(montoPago <= 0){
             throw new IllegalArgumentException("El valor a pagar debe ser mayor a cero.");
@@ -174,10 +177,10 @@ public class Prestamo {
         this.saldoPendiente -= montoPago;
         
         if(this.saldoPendiente == 0){
-            this.saldoPendiente = 0;
+            // this.saldoPendiente = 0;
             this.estado = EstadoPrestamo.PAGADO;
         }
-        
+        return this.saldoPendiente;
     }
     
 }
