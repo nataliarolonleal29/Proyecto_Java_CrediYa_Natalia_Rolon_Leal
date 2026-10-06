@@ -52,9 +52,9 @@ public class MenuPagos {
                     System.out.println("Regresando al menu principal...");
                     break;
                 default:
-                    System.out.println("Opción no válida");
+                    System.out.println("Opcion no valida");
             }           
-        } while(opcion != 7);
+        } while(opcion != 5);
     }
     
     

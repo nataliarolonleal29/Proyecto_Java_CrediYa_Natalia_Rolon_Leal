@@ -6,18 +6,6 @@ Sistema de gestión de clientes, empleados, préstamos y pagos desarrollado en J
 
 ---
 
-## Tabla de Contenidos
-
-- [Acerca del Proyecto](#-acerca-del-proyecto)
-- [Arquitectura del Sistema](#-arquitectura-del-sistema)
-- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Requisitos Previos](#-requisitos-previos)
-- [Configuración e Instalación](#-configuración-e-instalación)
-- [Demostración y Capturas de Pantalla](#-demostración-y-capturas-de-pantalla)
-- [Autor](#-autor)
-
----
 
 ## Acerca del Proyecto
 
@@ -126,7 +114,7 @@ Ejecuta la clase principal Proyecto_Java_CrediYa.java (F6).
 
 ## Diagrama UML
 
-![diagrama_uml](diagramaUML.JPG)
+![diagrama_uml](/img/diagramaUML.JPG)
 
 En caso de que no se vea muy bien el diagrama, este es el link para visualizarlo mejor:
 https://drive.google.com/file/d/1OC8NZNiFWqcZXYln7jKE8vb8L8IeB4OK/view?usp=sharing
@@ -136,10 +124,10 @@ https://drive.google.com/file/d/1OC8NZNiFWqcZXYln7jKE8vb8L8IeB4OK/view?usp=shari
 ## Demostración y Capturas de Pantalla
 A continuación se presentan las evidencias de funcionamiento del sistema en ejecución:
 
-1. Menú Principal y Navegación
+**1. Menú Principal y Navegación**
 ![menu_principal](/img/ejecucion1.JPG)
 
-2. Gestión de empleados
+**2. Gestión de empleados**
 ![empleados_1](/img/ejecucion2.JPG)
 ![empleados_2](/img/ejecucion3.JPG)
 ![empleados_3](/img/ejecucion4.JPG)
@@ -152,7 +140,7 @@ A continuación se presentan las evidencias de funcionamiento del sistema en eje
 
 
 
-3. Gestión de clientes
+**3. Gestión de clientes**
 ![clientes_1](/img/ejecucion11.JPG)
 ![clientes_2](/img/ejecucion12.JPG)
 ![clientes_3](/img/ejecucion13.JPG)
@@ -164,7 +152,7 @@ A continuación se presentan las evidencias de funcionamiento del sistema en eje
 
 
 
-4. Gestión de préstamos
+**4. Gestión de préstamos**
 ![prestamos_1](/img/ejecucion19.JPG)
 ![prestamos_2](/img/ejecucion20.JPG)
 ![prestamos_3](/img/ejecucion21.JPG)
@@ -180,7 +168,7 @@ A continuación se presentan las evidencias de funcionamiento del sistema en eje
 
 
 
-5. Gestión de pagos
+**5. Gestión de pagos**
 ![pagos_1](/img/ejecucion31.JPG)
 ![pagos_2](/img/ejecucion32.JPG)
 ![pagos_3](/img/ejecucion33.JPG)
